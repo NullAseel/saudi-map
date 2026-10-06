@@ -1,0 +1,1175 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🌴 منصة نخلتي</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+:root{
+  --bg:#F6F0DE;
+  --bg-card:#FFFDF8;
+  --ink:#20301F;
+  --ink-soft:#4C5B45;
+  --primary:#1F4B36;
+  --primary-2:#2F6B4A;
+  --primary-tint:#E3EEE5;
+  --accent:#C4881F;
+  --accent-tint:#F6E7C9;
+  --date:#7A3B24;
+  --date-tint:#F2DED2;
+  --border:#E4D6AF;
+  --danger:#B23A2E;
+  --shadow:0 10px 30px -12px rgba(32,48,31,.25);
+  --radius:18px;
+  --radius-sm:10px;
+}
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;}
+body{
+  background:var(--bg);
+  color:var(--ink);
+  font-family:'Tajawal',sans-serif;
+  font-weight:400;
+  line-height:1.7;
+  min-height:100vh;
+  background-image:
+    radial-gradient(circle at 100% 0%, rgba(196,136,31,.10), transparent 45%),
+    radial-gradient(circle at 0% 100%, rgba(31,75,54,.10), transparent 45%);
+}
+h1,h2,h3,h4{font-family:'Tajawal',sans-serif;font-weight:800;margin:0;color:var(--primary);}
+a{color:inherit;}
+button{font-family:inherit;cursor:pointer;}
+select{font-family:inherit;}
+
+/* ===== Decorative frond divider (signature element) ===== */
+.frond-divider{
+  width:100%;
+  height:14px;
+  overflow:hidden;
+  line-height:0;
+}
+.frond-divider svg{width:100%;height:100%;display:block;}
+
+/* ===== Header ===== */
+header.topbar{
+  background:linear-gradient(135deg,var(--primary) 0%,#163826 100%);
+  color:#F6F0DE;
+  padding:18px 28px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:16px;
+  flex-wrap:wrap;
+  position:sticky;
+  top:0;
+  z-index:50;
+  box-shadow:var(--shadow);
+}
+.brand{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+.brand .palm{
+  font-size:28px;
+  filter:drop-shadow(0 2px 3px rgba(0,0,0,.25));
+}
+.brand h1{
+  color:#FCF7E9;
+  font-size:22px;
+  letter-spacing:.2px;
+}
+.brand span.tagline{
+  display:block;
+  font-size:11px;
+  font-weight:400;
+  color:#CFE0D2;
+  margin-top:2px;
+}
+.header-controls{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  align-items:center;
+}
+.select-wrap{
+  position:relative;
+  display:flex;
+  align-items:center;
+}
+.select-wrap i.leading{
+  position:absolute;
+  inset-inline-start:12px;
+  color:var(--accent);
+  font-size:13px;
+  pointer-events:none;
+}
+.select-wrap select{
+  appearance:none;
+  background:rgba(255,255,255,.08);
+  border:1px solid rgba(255,255,255,.25);
+  color:#FCF7E9;
+  padding:9px 34px 9px 30px;
+  border-radius:999px;
+  font-size:13px;
+  font-weight:500;
+  outline:none;
+  transition:.2s;
+}
+.select-wrap select:hover{background:rgba(255,255,255,.16);}
+.select-wrap select option{color:#20301F;}
+.select-wrap i.chev{
+  position:absolute;
+  inset-inline-end:12px;
+  color:#CFE0D2;
+  font-size:11px;
+  pointer-events:none;
+}
+
+/* ===== Main nav tabs ===== */
+.main-nav{
+  display:flex;
+  max-width:1180px;
+  margin:26px auto 0;
+  padding:0 20px;
+  gap:12px;
+}
+.main-tab{
+  flex:1;
+  background:var(--bg-card);
+  border:1px solid var(--border);
+  border-radius:16px 16px 0 0;
+  padding:16px 20px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:10px;
+  font-weight:700;
+  font-size:16px;
+  color:var(--ink-soft);
+  border-bottom:none;
+  position:relative;
+  top:1px;
+  transition:.2s;
+}
+.main-tab i{font-size:18px;}
+.main-tab.active{
+  color:var(--primary);
+  background:var(--bg-card);
+  box-shadow:0 -6px 18px -10px rgba(32,48,31,.3);
+}
+.main-tab:not(.active){
+  background:#EFE7CE;
+  cursor:pointer;
+  opacity:.75;
+}
+.main-tab:not(.active):hover{opacity:1;}
+
+.content-shell{
+  max-width:1180px;
+  margin:0 auto 60px;
+  padding:26px 20px 10px;
+  background:var(--bg-card);
+  border:1px solid var(--border);
+  border-radius:0 0 20px 20px;
+  box-shadow:var(--shadow);
+}
+
+.tab-panel{display:none;}
+.tab-panel.active{display:block;animation:fadeIn .35s ease;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:translateY(0);}}
+
+/* ===== Weather widget ===== */
+.weather-card{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:18px;
+  background:linear-gradient(120deg,var(--primary-tint),#fff);
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  padding:20px 26px;
+  flex-wrap:wrap;
+  margin-bottom:28px;
+}
+.weather-left{display:flex;align-items:center;gap:16px;}
+.weather-left .wicon{
+  font-size:42px;
+  color:var(--accent);
+}
+.weather-region{font-size:13px;color:var(--ink-soft);font-weight:500;}
+.weather-temp{font-size:32px;font-weight:800;color:var(--primary);}
+.weather-cond{font-size:14px;color:var(--ink-soft);}
+.weather-stats{display:flex;gap:22px;flex-wrap:wrap;}
+.wstat{text-align:center;min-width:70px;}
+.wstat i{color:var(--primary-2);font-size:16px;margin-bottom:4px;display:block;}
+.wstat b{display:block;font-size:15px;}
+.wstat span{font-size:11px;color:var(--ink-soft);}
+
+/* ===== Path switch (sub nav) ===== */
+.path-switch{
+  display:flex;
+  gap:10px;
+  margin-bottom:22px;
+  flex-wrap:wrap;
+}
+.path-btn{
+  flex:1;
+  min-width:220px;
+  background:#fff;
+  border:1.5px solid var(--border);
+  border-radius:14px;
+  padding:14px 16px;
+  display:flex;
+  align-items:center;
+  gap:12px;
+  transition:.2s;
+  text-align:right;
+}
+.path-btn .pb-icon{
+  width:42px;height:42px;flex:none;
+  border-radius:12px;
+  display:flex;align-items:center;justify-content:center;
+  background:var(--primary-tint);
+  color:var(--primary);
+  font-size:18px;
+}
+.path-btn .pb-text b{display:block;font-size:14px;}
+.path-btn .pb-text span{font-size:11.5px;color:var(--ink-soft);}
+.path-btn.active{
+  border-color:var(--primary);
+  background:var(--primary-tint);
+  box-shadow:var(--shadow);
+}
+.path-btn.active .pb-icon{background:var(--primary);color:#fff;}
+.path-btn:hover{border-color:var(--primary-2);}
+
+.path-content{display:none;}
+.path-content.active{display:block;animation:fadeIn .3s ease;}
+
+/* date-cluster bullet (signature) */
+.date-list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:10px;}
+.date-list li{
+  display:flex;
+  align-items:flex-start;
+  gap:10px;
+  font-size:14px;
+  color:var(--ink);
+}
+.date-cluster{
+  flex:none;
+  width:20px;height:14px;
+  position:relative;
+  margin-top:4px;
+}
+.date-cluster i{
+  position:absolute;
+  width:7px;height:9px;
+  background:var(--date);
+  border-radius:50% 50% 50% 50% / 60% 60% 40% 40%;
+  top:2px;
+}
+.date-cluster i:nth-child(1){right:0;}
+.date-cluster i:nth-child(2){right:7px;top:0;background:var(--accent);}
+.date-cluster i:nth-child(3){right:14px;}
+
+/* ===== Section titles ===== */
+.section-title{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  margin:26px 0 14px;
+  font-size:16px;
+}
+.section-title i{color:var(--accent);font-size:18px;}
+.section-title:first-child{margin-top:0;}
+
+/* ===== Chat widget ===== */
+.chat-box{
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  overflow:hidden;
+  background:#fff;
+}
+.chat-window{
+  height:280px;
+  overflow-y:auto;
+  padding:16px;
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+  background:#FBF8F0;
+}
+.msg{
+  max-width:80%;
+  padding:10px 14px;
+  border-radius:14px;
+  font-size:13.5px;
+  line-height:1.6;
+}
+.msg.bot{
+  align-self:flex-start;
+  background:var(--primary-tint);
+  border:1px solid #D3E3D6;
+  border-start-start-radius:4px;
+}
+.msg.user{
+  align-self:flex-end;
+  background:var(--accent);
+  color:#fff;
+  border-start-end-radius:4px;
+}
+.chat-options{
+  padding:12px 16px;
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+  border-top:1px solid var(--border);
+  background:#fff;
+}
+.chat-options button{
+  background:#fff;
+  border:1.5px solid var(--primary-2);
+  color:var(--primary-2);
+  padding:8px 16px;
+  border-radius:999px;
+  font-size:13px;
+  font-weight:700;
+  transition:.15s;
+}
+.chat-options button:hover{background:var(--primary-2);color:#fff;}
+.chat-options .restart-btn{
+  border-color:var(--ink-soft);
+  color:var(--ink-soft);
+}
+.chat-options .restart-btn:hover{background:var(--ink-soft);color:#fff;}
+
+/* ===== Grid tools row: upload + audio ===== */
+.tools-row{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:16px;
+  margin-top:18px;
+}
+@media(max-width:720px){.tools-row{grid-template-columns:1fr;}}
+.tool-card{
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  padding:18px;
+  background:#fff;
+}
+.tool-card h4{font-size:14px;display:flex;align-items:center;gap:8px;margin-bottom:10px;}
+.tool-card h4 i{color:var(--accent);}
+.upload-zone{
+  border:2px dashed var(--border);
+  border-radius:var(--radius-sm);
+  padding:20px;
+  text-align:center;
+  color:var(--ink-soft);
+  font-size:13px;
+  cursor:pointer;
+  transition:.2s;
+}
+.upload-zone:hover{border-color:var(--primary-2);color:var(--primary-2);}
+.upload-zone i{font-size:26px;display:block;margin-bottom:8px;color:var(--accent);}
+#imgPreviewWrap{margin-top:12px;display:none;}
+#imgPreviewWrap img{width:100%;max-height:160px;object-fit:cover;border-radius:var(--radius-sm);border:1px solid var(--border);}
+.analysis-result{
+  margin-top:10px;
+  padding:10px 12px;
+  border-radius:var(--radius-sm);
+  font-size:13px;
+  display:none;
+}
+.analysis-result.show{display:block;animation:fadeIn .3s ease;}
+.analysis-result.warn{background:var(--date-tint);color:var(--date);border:1px solid #E3C3AE;}
+
+.audio-player{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  background:var(--primary-tint);
+  border-radius:var(--radius-sm);
+  padding:14px;
+}
+.play-btn{
+  width:44px;height:44px;flex:none;
+  border-radius:50%;
+  background:var(--primary);
+  color:#fff;
+  border:none;
+  display:flex;align-items:center;justify-content:center;
+  font-size:16px;
+}
+.wave{
+  flex:1;
+  height:26px;
+  display:flex;
+  align-items:center;
+  gap:3px;
+}
+.wave span{
+  width:3px;
+  background:var(--primary-2);
+  border-radius:2px;
+  height:8px;
+  transition:height .15s;
+}
+.audio-label{font-size:12px;color:var(--ink-soft);margin-inline-start:auto;}
+
+/* ===== Guidance calendar ===== */
+.calendar-timeline{
+  display:flex;
+  flex-direction:column;
+  gap:0;
+}
+.cal-item{
+  display:flex;
+  gap:14px;
+  position:relative;
+  padding-bottom:20px;
+}
+.cal-item:last-child{padding-bottom:0;}
+.cal-line{
+  flex:none;
+  width:16px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+}
+.cal-dot{width:12px;height:12px;border-radius:50%;background:var(--accent);border:2px solid #fff;box-shadow:0 0 0 2px var(--accent);}
+.cal-track{flex:1;width:2px;background:var(--border);margin-top:2px;}
+.cal-item:last-child .cal-track{display:none;}
+.cal-body{flex:1;background:#FBF8F0;border:1px solid var(--border);border-radius:var(--radius-sm);padding:12px 14px;}
+.cal-body b{color:var(--primary);font-size:13.5px;}
+.cal-period{font-size:11.5px;color:var(--accent);font-weight:700;margin-inline-start:6px;}
+.cal-body p{margin:4px 0 0;font-size:13px;color:var(--ink-soft);}
+
+/* ===== Stores list ===== */
+.store-list{display:flex;flex-direction:column;gap:10px;}
+.store-item{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  border:1px solid var(--border);
+  border-radius:var(--radius-sm);
+  padding:12px 14px;
+  background:#fff;
+}
+.store-item i.store-ic{color:var(--primary-2);font-size:18px;flex:none;}
+.store-info{flex:1;}
+.store-info b{font-size:13.5px;display:block;}
+.store-info span{font-size:12px;color:var(--ink-soft);}
+.map-link{
+  flex:none;
+  background:var(--primary-tint);
+  color:var(--primary);
+  border:1px solid #cfe0d2;
+  border-radius:999px;
+  padding:7px 14px;
+  font-size:12px;
+  font-weight:700;
+  text-decoration:none;
+  display:flex;align-items:center;gap:6px;
+}
+.map-link:hover{background:var(--primary);color:#fff;}
+
+/* ===== Byproduct + marketing cards ===== */
+.card-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;}
+@media(max-width:720px){.card-grid{grid-template-columns:1fr;}}
+.byp-card{
+  border:1px solid var(--border);
+  border-radius:var(--radius-sm);
+  padding:16px;
+  background:#fff;
+}
+.byp-card .byp-head{display:flex;align-items:center;gap:10px;margin-bottom:8px;}
+.byp-card .byp-icon{
+  width:36px;height:36px;border-radius:10px;
+  background:var(--date-tint);color:var(--date);
+  display:flex;align-items:center;justify-content:center;font-size:15px;flex:none;
+}
+.byp-card h4{font-size:14px;}
+.byp-card p{font-size:12.5px;color:var(--ink-soft);margin:0;}
+
+/* ===== Pricing cards ===== */
+.pricing-wrap{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:22px;
+  padding:10px 0 20px;
+}
+@media(max-width:760px){.pricing-wrap{grid-template-columns:1fr;}}
+.price-card{
+  border-radius:22px;
+  padding:28px 26px;
+  position:relative;
+  overflow:hidden;
+  border:1px solid var(--border);
+}
+.price-card.free{background:#fff;}
+.price-card.paid{
+  background:linear-gradient(150deg,var(--primary) 0%,#173a29 100%);
+  color:#F6F0DE;
+  border:none;
+}
+.price-card.paid .badge-pop{
+  position:absolute;top:16px;left:16px;
+  background:var(--accent);
+  color:#fff;
+  font-size:11px;
+  font-weight:800;
+  padding:4px 12px;
+  border-radius:999px;
+}
+.price-card .plan-name{font-size:14px;font-weight:700;color:var(--accent);margin-bottom:6px;}
+.price-card.paid .plan-name{color:#F2CE8B;}
+.price-card .plan-price{font-size:34px;font-weight:900;margin-bottom:2px;color:var(--primary);}
+.price-card.paid .plan-price{color:#fff;}
+.price-card .plan-sub{font-size:12px;color:var(--ink-soft);margin-bottom:18px;}
+.price-card.paid .plan-sub{color:#CFE0D2;}
+.plan-features{list-style:none;margin:0 0 22px;padding:0;display:flex;flex-direction:column;gap:10px;}
+.plan-features li{display:flex;align-items:center;gap:10px;font-size:13.5px;}
+.plan-features li i{color:var(--primary-2);font-size:13px;}
+.price-card.paid .plan-features li i{color:var(--accent);}
+.plan-cta{
+  width:100%;
+  padding:13px;
+  border-radius:12px;
+  border:none;
+  font-weight:800;
+  font-size:14px;
+}
+.price-card.free .plan-cta{background:var(--primary-tint);color:var(--primary);}
+.price-card.paid .plan-cta{background:var(--accent);color:#fff;}
+.price-card.free .plan-cta:hover{background:var(--primary);color:#fff;}
+.price-card.paid .plan-cta:hover{background:#d99a30;}
+
+/* ===== responsive header/nav ===== */
+@media(max-width:640px){
+  header.topbar{padding:14px 16px;}
+  .brand h1{font-size:18px;}
+  .main-nav{flex-direction:row;padding:0 14px;}
+  .main-tab{font-size:13px;padding:12px 8px;}
+  .main-tab span.full{display:none;}
+  .content-shell{padding:18px 14px 6px;border-radius:0;}
+  .weather-card{padding:16px;}
+  .weather-stats{gap:14px;}
+}
+footer.app-footer{
+  text-align:center;
+  font-size:12px;
+  color:var(--ink-soft);
+  padding:20px;
+}
+.visually-hidden{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);}
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">
+    <span class="palm">🌴</span>
+    <div>
+      <h1 data-i18n="brand">منصة نخلتي</h1>
+      <span class="tagline" data-i18n="tagline">رفيق مزارع النخيل الرقمي</span>
+    </div>
+  </div>
+  <div class="header-controls">
+    <div class="select-wrap">
+      <i class="fa-solid fa-location-dot leading"></i>
+      <select id="regionSelect" aria-label="اختيار المنطقة">
+        <option value="حائل">حائل</option>
+        <option value="القصيم">القصيم</option>
+        <option value="الرياض" selected>الرياض</option>
+        <option value="الأحساء">الأحساء</option>
+        <option value="المدينة المنورة">المدينة المنورة</option>
+      </select>
+      <i class="fa-solid fa-chevron-down chev"></i>
+    </div>
+    <div class="select-wrap">
+      <i class="fa-solid fa-globe leading"></i>
+      <select id="langSelect" aria-label="اختيار اللغة">
+        <option value="ar" selected>العربية</option>
+        <option value="en">English</option>
+        <option value="ur">Urdu</option>
+      </select>
+      <i class="fa-solid fa-chevron-down chev"></i>
+    </div>
+  </div>
+</header>
+<div class="frond-divider">
+  <svg viewBox="0 0 1200 14" preserveAspectRatio="none"><path d="M0 7 Q 30 0 60 7 T 120 7 T 180 7 T 240 7 T 300 7 T 360 7 T 420 7 T 480 7 T 540 7 T 600 7 T 660 7 T 720 7 T 780 7 T 840 7 T 900 7 T 960 7 T 1020 7 T 1080 7 T 1140 7 T 1200 7" fill="none" stroke="#C4881F" stroke-width="2" opacity="0.55"/></svg>
+</div>
+
+<nav class="main-nav">
+  <button class="main-tab active" data-tab="tab1">
+    <i class="fa-solid fa-tree"></i>
+    <span data-i18n="tab1" class="full">نخلتي</span>
+  </button>
+  <button class="main-tab" data-tab="tab2">
+    <i class="fa-solid fa-gem"></i>
+    <span data-i18n="tab2" class="full">الباقات والاشتراكات</span>
+  </button>
+</nav>
+
+<div class="content-shell">
+
+  <!-- ============ TAB 1 : نخلتي ============ -->
+  <section class="tab-panel active" id="tab1">
+
+    <div class="section-title"><i class="fa-solid fa-cloud-sun"></i><span data-i18n="weatherTitle">حالة الطقس في منطقتك</span></div>
+    <div class="weather-card">
+      <div class="weather-left">
+        <i class="fa-solid fa-sun wicon" id="weatherIcon"></i>
+        <div>
+          <div class="weather-region" id="weatherRegionLabel">الرياض</div>
+          <div class="weather-temp" id="weatherTemp">41°</div>
+          <div class="weather-cond" id="weatherCond">حار وصافي</div>
+        </div>
+      </div>
+      <div class="weather-stats">
+        <div class="wstat"><i class="fa-solid fa-wind"></i><b id="weatherWind">20 كم/س</b><span data-i18n="wind">الرياح</span></div>
+        <div class="wstat"><i class="fa-solid fa-droplet"></i><b id="weatherHum">12%</b><span data-i18n="humidity">الرطوبة</span></div>
+        <div class="wstat"><i class="fa-solid fa-temperature-half"></i><b id="weatherFeels">43°</b><span data-i18n="feelsLike">الإحساس</span></div>
+      </div>
+    </div>
+
+    <div class="path-switch" role="tablist">
+      <button class="path-btn active" data-path="path1">
+        <span class="pb-icon"><i class="fa-solid fa-bug"></i></span>
+        <span class="pb-text"><b data-i18n="path1">الآفات والإصابات</b><span data-i18n="path1sub">تشخيص وتوجيه فوري</span></span>
+      </button>
+      <button class="path-btn" data-path="path2">
+        <span class="pb-icon"><i class="fa-solid fa-seedling"></i></span>
+        <span class="pb-text"><b data-i18n="path2">الإرشاد</b><span data-i18n="path2sub">تقويم زراعي ومتاجر قريبة</span></span>
+      </button>
+      <button class="path-btn" data-path="path3">
+        <span class="pb-icon"><i class="fa-solid fa-box-open"></i></span>
+        <span class="pb-text"><b data-i18n="path3">التسويق</b><span data-i18n="path3sub">بيع التمور واستغلال المخلفات</span></span>
+      </button>
+    </div>
+
+    <!-- PATH 1: الآفات -->
+    <div class="path-content active" id="path1">
+      <div class="section-title"><i class="fa-solid fa-comments"></i><span data-i18n="chatTitle">شخّص المشكلة خطوة بخطوة</span></div>
+      <div class="chat-box">
+        <div class="chat-window" id="chatWindow"></div>
+        <div class="chat-options" id="chatOptions"></div>
+      </div>
+
+      <div class="tools-row">
+        <div class="tool-card">
+          <h4><i class="fa-solid fa-camera"></i><span data-i18n="uploadTitle">تشخيص بالصورة (AI Vision)</span></h4>
+          <div class="upload-zone" id="uploadZone">
+            <i class="fa-solid fa-cloud-arrow-up"></i>
+            <span data-i18n="uploadHint">اضغط لرفع صورة للنخلة أو السعفة المصابة</span>
+          </div>
+          <input type="file" id="imgInput" accept="image/*" class="visually-hidden">
+          <div id="imgPreviewWrap"><img id="imgPreview" alt="صورة مرفوعة"></div>
+          <div class="analysis-result warn" id="analysisResult"></div>
+        </div>
+
+        <div class="tool-card">
+          <h4><i class="fa-solid fa-volume-high"></i><span data-i18n="audioTitle">التوجيه الصوتي المحلي</span></h4>
+          <div class="audio-player">
+            <button class="play-btn" id="playAudioBtn"><i class="fa-solid fa-play" id="playIcon"></i></button>
+            <div class="wave" id="waveBars"></div>
+            <span class="audio-label" data-i18n="audioLabel">نبرة محلية · 0:18</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PATH 2: الإرشاد -->
+    <div class="path-content" id="path2">
+      <div class="section-title"><i class="fa-solid fa-calendar-days"></i><span data-i18n="calTitle">التقويم الزراعي حسب المنطقة</span></div>
+      <div class="calendar-timeline" id="calTimeline"></div>
+
+      <div class="section-title"><i class="fa-solid fa-store"></i><span data-i18n="storesTitle">متاجر وصيدليات زراعية قريبة</span></div>
+      <div class="store-list" id="storeList"></div>
+    </div>
+
+    <!-- PATH 3: التسويق -->
+    <div class="path-content" id="path3">
+      <div class="section-title"><i class="fa-solid fa-bullhorn"></i><span data-i18n="marketingTitle">إرشادات تسويق وبيع التمور</span></div>
+      <ul class="date-list" id="marketingList"></ul>
+
+      <div class="section-title"><i class="fa-solid fa-recycle"></i><span data-i18n="byproductTitle">دليل استغلال مخلفات النخيل</span></div>
+      <div class="card-grid" id="byproductGrid"></div>
+    </div>
+
+  </section>
+
+  <!-- ============ TAB 2 : الباقات ============ -->
+  <section class="tab-panel" id="tab2">
+    <div class="section-title"><i class="fa-solid fa-scale-balanced"></i><span data-i18n="plansTitle">قارن بين الباقات واختر ما يناسب مزرعتك</span></div>
+    <div class="pricing-wrap">
+      <div class="price-card free">
+        <div class="plan-name" data-i18n="freePlanName">الباقة المجانية</div>
+        <div class="plan-price">0 <span style="font-size:14px;font-weight:700;" data-i18n="sar">ريال</span></div>
+        <div class="plan-sub" data-i18n="freePlanSub">للمزارع الفردي الذي يبدأ رحلته</div>
+        <ul class="plan-features">
+          <li><i class="fa-solid fa-circle-check"></i><span data-i18n="f1">تشخيص أساسي للآفات عبر الشات</span></li>
+          <li><i class="fa-solid fa-circle-check"></i><span data-i18n="f2">الطقس والتقويم الزراعي لمنطقة واحدة</span></li>
+          <li><i class="fa-solid fa-circle-check"></i><span data-i18n="f3">3 عمليات تحليل صور شهرياً</span></li>
+          <li><i class="fa-solid fa-circle-check"></i><span data-i18n="f4">الوصول لدليل التسويق العام</span></li>
+        </ul>
+        <button class="plan-cta" data-i18n="freeCta">ابدأ مجاناً</button>
+      </div>
+      <div class="price-card paid">
+        <span class="badge-pop" data-i18n="popular">الأكثر طلباً</span>
+        <div class="plan-name" data-i18n="paidPlanName">باقة المزارع</div>
+        <div class="plan-price">49 <span style="font-size:14px;font-weight:700;" data-i18n="sarMonth">ريال / شهرياً</span></div>
+        <div class="plan-sub" data-i18n="paidPlanSub">لأصحاب المزارع والمشرفين الزراعيين</div>
+        <ul class="plan-features">
+          <li><i class="fa-solid fa-star"></i><span data-i18n="p1">تحليل صور غير محدود بدقة أعلى</span></li>
+          <li><i class="fa-solid fa-star"></i><span data-i18n="p2">تنبيهات مبكرة لسوسة النخيل الحمراء</span></li>
+          <li><i class="fa-solid fa-star"></i><span data-i18n="p3">متابعة عدة مناطق ومزارع في آن واحد</span></li>
+          <li><i class="fa-solid fa-star"></i><span data-i18n="p4">تواصل مباشر مع مرشد زراعي مختص</span></li>
+          <li><i class="fa-solid fa-star"></i><span data-i18n="p5">تقارير تسويقية وربط بمشترين محتملين</span></li>
+        </ul>
+        <button class="plan-cta" data-i18n="paidCta">اشترك الآن</button>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<footer class="app-footer" data-i18n="footer">🌴 منصة نخلتي — نموذج أولي (MVP) لدعم مزارعي النخيل في المملكة العربية السعودية</footer>
+
+<script>
+/* ================= DATA ================= */
+const regions = ["حائل","القصيم","الرياض","الأحساء","المدينة المنورة"];
+
+const weatherData = {
+  "حائل":{temp:34,feels:33,cond:"صافي ومعتدل",icon:"fa-sun",wind:18,hum:22},
+  "القصيم":{temp:37,feels:36,cond:"مشمس",icon:"fa-sun",wind:14,hum:18},
+  "الرياض":{temp:41,feels:43,cond:"حار وصافي",icon:"fa-sun",wind:20,hum:12},
+  "الأحساء":{temp:39,feels:42,cond:"مشمس ورطب",icon:"fa-cloud-sun",wind:10,hum:35},
+  "المدينة المنورة":{temp:36,feels:37,cond:"غائم جزئياً",icon:"fa-cloud-sun",wind:16,hum:20}
+};
+
+const calendarData = {
+  "حائل":[
+    {stage:"التلقيح",period:"أواخر فبراير - مارس",task:"تلقيح الطلع يدوياً صباحاً قبل ارتفاع الحرارة، مناسب للمناخ البارد نسبياً."},
+    {stage:"التسميد الأول",period:"مارس - أبريل",task:"إضافة سماد عضوي متحلل + عنصر النيتروجين حول جذع النخلة."},
+    {stage:"خف الثمار",period:"مايو - يونيو",task:"إزالة جزء من الشماريخ لتحسين حجم وجودة الثمار المتبقية."},
+    {stage:"الجني",period:"سبتمبر - أكتوبر",task:"الجني على دفعات حسب نضج الثمار، الموسم يتأخر قليلاً بسبب برودة المنطقة."}
+  ],
+  "القصيم":[
+    {stage:"التلقيح",period:"فبراير",task:"تلقيح مبكر نسبياً نظراً لدفء المنطقة الزراعية المعروفة."},
+    {stage:"التسميد الأول",period:"مارس",task:"دفعة تسميد متوازنة NPK مع الري الغزير عقب التلقيح."},
+    {stage:"خف الثمار",period:"مايو",task:"خف الشماريخ وتقليم السعف الجاف المحيط بالعذوق."},
+    {stage:"الجني",period:"أغسطس - سبتمبر",task:"موسم جني مبكر نسبياً، متابعة السوق أولاً بأول."}
+  ],
+  "الرياض":[
+    {stage:"التلقيح",period:"فبراير - مارس",task:"تلقيح الطلع عند تفتحه بنسبة 30-50% لأفضل نتائج عقد الثمار."},
+    {stage:"التسميد الأول",period:"مارس",task:"تسميد آزوتي مع متابعة الري بسبب ارتفاع درجات الحرارة المبكر."},
+    {stage:"خف الثمار",period:"مايو - يونيو",task:"خف الثمار وتعديل عدد الشماريخ حسب قوة النخلة."},
+    {stage:"الجني",period:"أغسطس - سبتمبر",task:"جني الرطب أولاً ثم التمر حسب الصنف، تجنب الجني في ساعات الظهيرة الحارة."}
+  ],
+  "الأحساء":[
+    {stage:"التلقيح",period:"يناير - فبراير",task:"أبكر مناطق المملكة في التلقيح بسبب الرطوبة الساحلية ودفء المناخ."},
+    {stage:"التسميد الأول",period:"فبراير - مارس",task:"الانتباه لزيادة الرطوبة، تسميد متوازن مع تهوية جيدة حول الجذع."},
+    {stage:"خف الثمار",period:"أبريل - مايو",task:"خف مبكر مع مراقبة الإصابات الفطرية بسبب الرطوبة العالية."},
+    {stage:"الجني",period:"يوليو - أغسطس",task:"أبكر موسم جني في المملكة، يبدأ التسويق المبكر من هنا."}
+  ],
+  "المدينة المنورة":[
+    {stage:"التلقيح",period:"فبراير",task:"تلقيح يدوي دقيق، المنطقة مشهورة بأصناف عجوة وصفاوي حساسة للتوقيت."},
+    {stage:"التسميد الأول",period:"مارس",task:"تسميد عضوي غني مع الاهتمام بجودة المياه المستخدمة في الري."},
+    {stage:"خف الثمار",period:"مايو",task:"خف دقيق للحفاظ على جودة الثمار المرتبطة بالسمعة التسويقية العالية للمنطقة."},
+    {stage:"الجني",period:"أغسطس - سبتمبر",task:"جني بعناية فائقة نظراً للقيمة السوقية المرتفعة لتمور المدينة."}
+  ]
+};
+
+const storesData = {
+  "حائل":[
+    {name:"مؤسسة الواحة للمستلزمات الزراعية",addr:"طريق الملك عبدالعزيز، حائل"},
+    {name:"صيدلية النخيل الزراعية",addr:"حي النقرة، حائل"}
+  ],
+  "القصيم":[
+    {name:"مركز بريدة للمستلزمات الزراعية",addr:"طريق الملك فهد، بريدة"},
+    {name:"صيدلية الروضة الزراعية",addr:"حي الروضة، عنيزة"}
+  ],
+  "الرياض":[
+    {name:"مؤسسة الرياض للمعدات الزراعية",addr:"طريق خريص، الرياض"},
+    {name:"صيدلية المزارع الحديثة",addr:"حي الشفا، الرياض"}
+  ],
+  "الأحساء":[
+    {name:"جمعية الأحساء التعاونية الزراعية",addr:"الهفوف، الأحساء"},
+    {name:"صيدلية واحة النخيل",addr:"المبرز، الأحساء"}
+  ],
+  "المدينة المنورة":[
+    {name:"مؤسسة العالية الزراعية",addr:"طريق الهجرة، المدينة المنورة"},
+    {name:"صيدلية قباء الزراعية",addr:"حي قباء، المدينة المنورة"}
+  ]
+};
+
+const marketingTips = [
+  "صوّر التمور بإضاءة طبيعية وخلفية بسيطة لجذب المشترين عبر منصات التواصل.",
+  "صنّف التمور حسب الدرجة (فاخر، تجاري) وحدد سعراً عادلاً لكل فئة.",
+  "اربط منتجك بقصة المزرعة والمنطقة، فالهوية المحلية تزيد من قيمة المنتج.",
+  "استخدم التغليف المناسب للحفاظ على جودة التمور أثناء الشحن للمدن الأخرى.",
+  "تواصل مع الجمعيات التعاونية والمعارض المحلية لتوسيع قنوات البيع."
+];
+
+const byproducts = [
+  {icon:"fa-leaf",title:"السعف",text:"يُستخدم في صناعة السلال والحصير والمنتجات الحرفية، وكمواد عزل وتغطية."},
+  {icon:"fa-layer-group",title:"الكرب",text:"يُستغل كوقود حيوي ومواد بناء تقليدية، وأحياناً في الأثاث الريفي."},
+  {icon:"fa-circle-dot",title:"النوى",text:"يُطحن كعلف حيواني مغذٍ، ويُستخرج منه زيت يدخل في صناعات تجميلية."},
+  {icon:"fa-tree",title:"الجذوع",text:"تُستعمل في النجارة الريفية والأخشاب الإنشائية للمشاريع الزراعية الصغيرة."}
+];
+
+/* Chat decision tree */
+const chatTree = {
+  start:{
+    bot:"مرحباً بك! لنتحقق من حالة نخلتك سويًا. هل تلاحظ اصفراراً أو جفافاً في السعف؟",
+    options:[
+      {label:"نعم، يوجد اصفرار",next:"yellow"},
+      {label:"لا، السعف سليم",next:"trunk"}
+    ]
+  },
+  yellow:{
+    bot:"هل الاصفرار مصحوب بجفاف في أطراف السعف مع سقوط بعض الخوص؟",
+    options:[
+      {label:"نعم",next:"resultNutrient"},
+      {label:"لا",next:"resultFungal"}
+    ]
+  },
+  trunk:{
+    bot:"هل تلاحظ ثقوباً صغيرة في الجذع مصحوبة بخروج نشارة خشب أو سائل؟",
+    options:[
+      {label:"نعم",next:"resultWeevil"},
+      {label:"لا",next:"resultOk"}
+    ]
+  },
+  resultNutrient:{
+    bot:"⚠️ الأعراض تشير غالباً إلى نقص عناصر غذائية (خاصة البوتاسيوم والمغنيسيوم). يُنصح برفع صورة واضحة للتشخيص الدقيق والتواصل مع أقرب مرشد زراعي.",
+    options:[{label:"ابدأ من جديد",next:"start"}]
+  },
+  resultFungal:{
+    bot:"⚠️ قد تكون إصابة فطرية مثل تعفن القمة النامية. يُفضّل عزل الأدوات المستخدمة ورفع صورة للتحليل فوراً.",
+    options:[{label:"ابدأ من جديد",next:"start"}]
+  },
+  resultWeevil:{
+    bot:"🚨 هذه علامات خطيرة تشير لاحتمال الإصابة بسوسة النخيل الحمراء. يُرجى عدم نقل أجزاء النخلة والتواصل الفوري مع وزارة البيئة والمياه والزراعة عبر الرقم 1900.",
+    options:[{label:"ابدأ من جديد",next:"start"}]
+  },
+  resultOk:{
+    bot:"🌴 لا توجد مؤشرات واضحة على إصابة حالياً. يُنصح بالمتابعة الدورية والاستمرار في برنامج الوقاية ضمن مسار الإرشاد.",
+    options:[{label:"ابدأ من جديد",next:"start"}]
+  }
+};
+
+/* Translations for chrome/labels */
+const translations = {
+  ar:{
+    brand:"منصة نخلتي", tagline:"رفيق مزارع النخيل الرقمي",
+    tab1:"نخلتي", tab2:"الباقات والاشتراكات",
+    weatherTitle:"حالة الطقس في منطقتك", wind:"الرياح", humidity:"الرطوبة", feelsLike:"الإحساس",
+    path1:"الآفات والإصابات", path1sub:"تشخيص وتوجيه فوري",
+    path2:"الإرشاد", path2sub:"تقويم زراعي ومتاجر قريبة",
+    path3:"التسويق", path3sub:"بيع التمور واستغلال المخلفات",
+    chatTitle:"شخّص المشكلة خطوة بخطوة",
+    uploadTitle:"تشخيص بالصورة (AI Vision)", uploadHint:"اضغط لرفع صورة للنخلة أو السعفة المصابة",
+    audioTitle:"التوجيه الصوتي المحلي", audioLabel:"نبرة محلية · 0:18",
+    calTitle:"التقويم الزراعي حسب المنطقة", storesTitle:"متاجر وصيدليات زراعية قريبة",
+    marketingTitle:"إرشادات تسويق وبيع التمور", byproductTitle:"دليل استغلال مخلفات النخيل",
+    plansTitle:"قارن بين الباقات واختر ما يناسب مزرعتك",
+    freePlanName:"الباقة المجانية", freePlanSub:"للمزارع الفردي الذي يبدأ رحلته",
+    f1:"تشخيص أساسي للآفات عبر الشات", f2:"الطقس والتقويم الزراعي لمنطقة واحدة",
+    f3:"3 عمليات تحليل صور شهرياً", f4:"الوصول لدليل التسويق العام",
+    freeCta:"ابدأ مجاناً", sar:"ريال",
+    paidPlanName:"باقة المزارع", paidPlanSub:"لأصحاب المزارع والمشرفين الزراعيين", popular:"الأكثر طلباً",
+    p1:"تحليل صور غير محدود بدقة أعلى", p2:"تنبيهات مبكرة لسوسة النخيل الحمراء",
+    p3:"متابعة عدة مناطق ومزارع في آن واحد", p4:"تواصل مباشر مع مرشد زراعي مختص",
+    p5:"تقارير تسويقية وربط بمشترين محتملين",
+    paidCta:"اشترك الآن", sarMonth:"ريال / شهرياً",
+    footer:"🌴 منصة نخلتي — نموذج أولي (MVP) لدعم مزارعي النخيل في المملكة العربية السعودية"
+  },
+  en:{
+    brand:"Nakhlati Platform", tagline:"Your digital date-palm farming companion",
+    tab1:"My Palm", tab2:"Plans & Subscriptions",
+    weatherTitle:"Weather in your region", wind:"Wind", humidity:"Humidity", feelsLike:"Feels like",
+    path1:"Pests & Infections", path1sub:"Instant diagnosis & guidance",
+    path2:"Guidance", path2sub:"Farming calendar & nearby stores",
+    path3:"Marketing", path3sub:"Sell dates & use palm by-products",
+    chatTitle:"Diagnose the issue step by step",
+    uploadTitle:"Image diagnosis (AI Vision)", uploadHint:"Tap to upload a photo of the affected palm or frond",
+    audioTitle:"Local voice guidance", audioLabel:"Local voice · 0:18",
+    calTitle:"Farming calendar by region", storesTitle:"Nearby agricultural stores & pharmacies",
+    marketingTitle:"Date marketing & selling guidance", byproductTitle:"Palm by-products usage guide",
+    plansTitle:"Compare plans and pick what suits your farm",
+    freePlanName:"Free Plan", freePlanSub:"For the individual farmer getting started",
+    f1:"Basic pest diagnosis via chat", f2:"Weather & farming calendar for one region",
+    f3:"3 image analyses per month", f4:"Access to the general marketing guide",
+    freeCta:"Start for free", sar:"SAR",
+    paidPlanName:"Farmer Plan", paidPlanSub:"For farm owners and agricultural supervisors", popular:"Most popular",
+    p1:"Unlimited high-accuracy image analysis", p2:"Early alerts for red palm weevil",
+    p3:"Track multiple regions and farms at once", p4:"Direct contact with a specialized agri-advisor",
+    p5:"Marketing reports & buyer connections",
+    paidCta:"Subscribe now", sarMonth:"SAR / month",
+    footer:"🌴 Nakhlati Platform — MVP to support date-palm farmers in Saudi Arabia"
+  },
+  ur:{
+    brand:"نخلتی پلیٹ فارم", tagline:"کھجور کے کسان کا ڈیجیٹل ساتھی",
+    tab1:"میری نخلتی", tab2:"پیکجز اور سبسکرپشن",
+    weatherTitle:"آپ کے علاقے کا موسم", wind:"ہوا", humidity:"نمی", feelsLike:"محسوس ہونے والا",
+    path1:"کیڑے اور امراض", path1sub:"فوری تشخیص اور رہنمائی",
+    path2:"رہنمائی", path2sub:"زرعی کیلنڈر اور قریبی دکانیں",
+    path3:"مارکیٹنگ", path3sub:"کھجور فروخت اور فضلہ استعمال",
+    chatTitle:"مسئلے کی مرحلہ وار تشخیص کریں",
+    uploadTitle:"تصویر سے تشخیص (AI Vision)", uploadHint:"متاثرہ کھجور یا شاخ کی تصویر اپ لوڈ کریں",
+    audioTitle:"مقامی صوتی رہنمائی", audioLabel:"مقامی آواز · 0:18",
+    calTitle:"علاقے کے مطابق زرعی کیلنڈر", storesTitle:"قریبی زرعی دکانیں اور فارمیسیاں",
+    marketingTitle:"کھجور کی مارکیٹنگ اور فروخت کی رہنمائی", byproductTitle:"کھجور کے فضلے کے استعمال کی رہنمائی",
+    plansTitle:"پیکجز کا موازنہ کریں اور اپنے فارم کے لیے منتخب کریں",
+    freePlanName:"مفت پیکج", freePlanSub:"نئے انفرادی کسان کے لیے",
+    f1:"چیٹ کے ذریعے بنیادی کیڑوں کی تشخیص", f2:"ایک علاقے کے لیے موسم اور زرعی کیلنڈر",
+    f3:"ماہانہ 3 تصویری تجزیے", f4:"عمومی مارکیٹنگ گائیڈ تک رسائی",
+    freeCta:"مفت شروع کریں", sar:"ریال",
+    paidPlanName:"کسان پیکج", paidPlanSub:"فارم مالکان اور زرعی نگرانوں کے لیے", popular:"سب سے مقبول",
+    p1:"لامحدود اور زیادہ درست تصویری تجزیہ", p2:"سرخ کھجور کے سُونڈی کے لیے ابتدائی انتباہ",
+    p3:"بیک وقت متعدد علاقوں اور فارموں کی نگرانی", p4:"ماہر زرعی مشیر سے براہ راست رابطہ",
+    p5:"مارکیٹنگ رپورٹس اور خریداروں سے رابطہ",
+    paidCta:"ابھی سبسکرائب کریں", sarMonth:"ریال / ماہانہ",
+    footer:"🌴 نخلتی پلیٹ فارم — سعودی عرب میں کھجور کے کسانوں کے لیے MVP"
+  }
+};
+
+/* ================= STATE ================= */
+let currentRegion = "الرياض";
+let currentLang = "ar";
+let currentChatNode = "start";
+
+/* ================= RENDER FUNCTIONS ================= */
+function applyLang(lang){
+  currentLang = lang;
+  const dict = translations[lang];
+  document.querySelectorAll("[data-i18n]").forEach(el=>{
+    const key = el.getAttribute("data-i18n");
+    if(dict[key]) el.textContent = dict[key];
+  });
+  if(lang === "en"){
+    document.documentElement.setAttribute("dir","ltr");
+    document.documentElement.setAttribute("lang","en");
+  } else {
+    document.documentElement.setAttribute("dir","rtl");
+    document.documentElement.setAttribute("lang", lang === "ur" ? "ur" : "ar");
+  }
+}
+
+function renderWeather(region){
+  const w = weatherData[region];
+  document.getElementById("weatherRegionLabel").textContent = region;
+  document.getElementById("weatherTemp").textContent = w.temp + "°";
+  document.getElementById("weatherCond").textContent = w.cond;
+  document.getElementById("weatherWind").textContent = w.wind + " كم/س";
+  document.getElementById("weatherHum").textContent = w.hum + "%";
+  document.getElementById("weatherFeels").textContent = w.feels + "°";
+  const icon = document.getElementById("weatherIcon");
+  icon.className = "fa-solid " + w.icon + " wicon";
+}
+
+function renderCalendar(region){
+  const wrap = document.getElementById("calTimeline");
+  wrap.innerHTML = "";
+  calendarData[region].forEach(item=>{
+    const div = document.createElement("div");
+    div.className = "cal-item";
+    div.innerHTML = `
+      <div class="cal-line"><div class="cal-dot"></div><div class="cal-track"></div></div>
+      <div class="cal-body"><b>${item.stage}</b><span class="cal-period">${item.period}</span><p>${item.task}</p></div>
+    `;
+    wrap.appendChild(div);
+  });
+}
+
+function renderStores(region){
+  const wrap = document.getElementById("storeList");
+  wrap.innerHTML = "";
+  storesData[region].forEach(s=>{
+    const mapUrl = "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(s.name + " " + s.addr);
+    const div = document.createElement("div");
+    div.className = "store-item";
+    div.innerHTML = `
+      <i class="fa-solid fa-store store-ic"></i>
+      <div class="store-info"><b>${s.name}</b><span>${s.addr}</span></div>
+      <a class="map-link" href="${mapUrl}" target="_blank" rel="noopener"><i class="fa-solid fa-map-location-dot"></i> خرائط قوقل</a>
+    `;
+    wrap.appendChild(div);
+  });
+}
+
+function renderMarketing(){
+  const wrap = document.getElementById("marketingList");
+  wrap.innerHTML = "";
+  marketingTips.forEach(t=>{
+    const li = document.createElement("li");
+    li.innerHTML = `<span class="date-cluster"><i></i><i></i><i></i></span><span>${t}</span>`;
+    wrap.appendChild(li);
+  });
+}
+
+function renderByproducts(){
+  const wrap = document.getElementById("byproductGrid");
+  wrap.innerHTML = "";
+  byproducts.forEach(b=>{
+    const div = document.createElement("div");
+    div.className = "byp-card";
+    div.innerHTML = `
+      <div class="byp-head"><span class="byp-icon"><i class="fa-solid ${b.icon}"></i></span><h4>${b.title}</h4></div>
+      <p>${b.text}</p>
+    `;
+    wrap.appendChild(div);
+  });
+}
+
+/* ---- Chat ---- */
+function renderChatNode(nodeKey, addUserLabel){
+  const node = chatTree[nodeKey];
+  const win = document.getElementById("chatWindow");
+  const opts = document.getElementById("chatOptions");
+
+  if(addUserLabel){
+    const um = document.createElement("div");
+    um.className = "msg user";
+    um.textContent = addUserLabel;
+    win.appendChild(um);
+  }
+
+  const bm = document.createElement("div");
+  bm.className = "msg bot";
+  bm.textContent = node.bot;
+  win.appendChild(bm);
+  win.scrollTop = win.scrollHeight;
+
+  opts.innerHTML = "";
+  node.options.forEach(opt=>{
+    const btn = document.createElement("button");
+    btn.textContent = opt.label;
+    if(opt.next === "start"){ btn.classList.add("restart-btn"); }
+    btn.addEventListener("click",()=>{
+      currentChatNode = opt.next;
+      if(opt.next === "start"){
+        win.innerHTML = "";
+        renderChatNode("start", null);
+      } else {
+        renderChatNode(opt.next, opt.label);
+      }
+    });
+    opts.appendChild(btn);
+  });
+}
+
+/* ---- Audio simulate (Web Audio API tone, avoids broken file src) ---- */
+let audioCtx = null;
+let isPlaying = false;
+function buildWaveBars(){
+  const wave = document.getElementById("waveBars");
+  wave.innerHTML = "";
+  for(let i=0;i<24;i++){
+    const bar = document.createElement("span");
+    bar.style.height = "6px";
+    wave.appendChild(bar);
+  }
+}
+function animateWave(active){
+  const bars = document.querySelectorAll("#waveBars span");
+  bars.forEach(b=>{
+    b.style.height = active ? (6 + Math.random()*18) + "px" : "6px";
+  });
+}
+let waveInterval = null;
+document.getElementById("playAudioBtn").addEventListener("click", ()=>{
+  const icon = document.getElementById("playIcon");
+  if(!isPlaying){
+    isPlaying = true;
+    icon.className = "fa-solid fa-pause";
+    if(!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    const osc = audioCtx.createOscillator();
+    const gain = audioCtx.createGain();
+    osc.frequency.value = 330;
+    osc.type = "sine";
+    gain.gain.value = 0.05;
+    osc.connect(gain).connect(audioCtx.destination);
+    osc.start();
+    waveInterval = setInterval(()=>animateWave(true), 150);
+    setTimeout(()=>{
+      osc.stop();
+      isPlaying = false;
+      icon.className = "fa-solid fa-play";
+      clearInterval(waveInterval);
+      animateWave(false);
+    }, 3000);
+  }
+});
+
+/* ---- Image upload + fake AI analysis ---- */
+document.getElementById("uploadZone").addEventListener("click", ()=>{
+  document.getElementById("imgInput").click();
+});
+document.getElementById("imgInput").addEventListener("change", (e)=>{
+  const file = e.target.files[0];
+  if(!file) return;
+  const reader = new FileReader();
+  reader.onload = (ev)=>{
+    document.getElementById("imgPreview").src = ev.target.result;
+    document.getElementById("imgPreviewWrap").style.display = "block";
+    const result = document.getElementById("analysisResult");
+    result.classList.remove("show");
+    result.textContent = "جارِ تحليل الصورة بواسطة الذكاء الاصطناعي...";
+    result.classList.add("show");
+    setTimeout(()=>{
+      result.innerHTML = "<b>نتيجة أولية:</b> تم رصد نمط اصفرار جزئي في السعف، يُنصح بمراجعة مسار «الإرشاد» والتواصل مع مرشد زراعي للتأكيد.";
+    }, 1400);
+  };
+  reader.readAsDataURL(file);
+});
+
+/* ================= EVENT WIRING ================= */
+document.querySelectorAll(".main-tab").forEach(tab=>{
+  tab.addEventListener("click", ()=>{
+    document.querySelectorAll(".main-tab").forEach(t=>t.classList.remove("active"));
+    document.querySelectorAll(".tab-panel").forEach(p=>p.classList.remove("active"));
+    tab.classList.add("active");
+    document.getElementById(tab.dataset.tab).classList.add("active");
+  });
+});
+
+document.querySelectorAll(".path-btn").forEach(btn=>{
+  btn.addEventListener("click", ()=>{
+    document.querySelectorAll(".path-btn").forEach(b=>b.classList.remove("active"));
+    document.querySelectorAll(".path-content").forEach(p=>p.classList.remove("active"));
+    btn.classList.add("active");
+    document.getElementById(btn.dataset.path).classList.add("active");
+  });
+});
+
+document.getElementById("regionSelect").addEventListener("change",(e)=>{
+  currentRegion = e.target.value;
+  renderWeather(currentRegion);
+  renderCalendar(currentRegion);
+  renderStores(currentRegion);
+});
+
+document.getElementById("langSelect").addEventListener("change",(e)=>{
+  applyLang(e.target.value);
+});
+
+/* ================= INIT ================= */
+renderWeather(currentRegion);
+renderCalendar(currentRegion);
+renderStores(currentRegion);
+renderMarketing();
+renderByproducts();
+buildWaveBars();
+renderChatNode("start", null);
+applyLang("ar");
+</script>
+</body>
+</html>
